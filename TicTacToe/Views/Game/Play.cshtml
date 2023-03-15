@@ -1,0 +1,45 @@
+﻿@model Game
+
+@{
+    ViewBag.Title = "Play Game";
+}
+
+<h2>Game @Model.Id</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <h4>Players:</h4>
+        <ul>
+            <li>@Model.Player1 (X)</li>
+            <li>@Model.Player2 (O)</li>
+        </ul>
+        @if (Model.IsGameOver)
+        {
+            @if (Model.Success)
+            {
+                <p>Game Over! Winner: @Model.CurrentPlayer</p>
+            }
+            else
+            {
+                <p>Nobody win...</p>
+            }
+
+
+        }
+        @Html.ActionLink("Reset Game", "Reset", new { id = Model.Id }, new { @class = "btn btn-primary" })
+    </div>
+    <div class="col-md-2">
+        <table class="table table-bordered">
+            <tbody>
+                @for (int i = 0; i < 3; i++)
+                {
+                    <tr>
+                        @for (int j = 0; j < 3; j++) {
+                            <td>@Html.ActionLink(Model.Board[i, j].ToString(), "Move", "Game", new { id = Model.Id, player = Model.CurrentPlayer, row = i, column = j }, new { @class = "btn btn-block btn-outline-primary" })</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Game>
+
+@{
+    ViewBag.Title = "Tic Tac Toe";
+}
+
+<h2>Tic Tac Toe Games</h2>
+
+<p>
+    @Html.ActionLink("Create New Game", "Create")
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Player 1</th>
+            <th>Player 2</th>
+            <th>Result</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var game in Model)
+        {
+            <tr>
+                <td>@game.Id</td>
+                <td>@game.Player1</td>
+                <td>@game.Player2</td>
+                <td>@if (!game.IsGameOver) 
+                    {
+                        @Html.ActionLink("Play", "Play", new { id = game.Id })
+                    }
+                    else
+                    {
+                        @if (!game.Success)
+                        {
+                            <p>Nobody won!</p>
+                        }
+                        else
+                        {
+                            <p>Player @game.CurrentPlayer won!</p>
+                        }
+                        
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
